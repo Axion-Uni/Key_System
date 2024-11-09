@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storm Softworks Key System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Array with 55 keys
+        const KeysTable = [
+"SW-rve8aw3Rd02sflIOQmRCi1Y7WfTxv7Fu", "SW-Yo9RXK7nL5apIE6PGZd5GCtCqSW8PnrJ", 
+            "SW-Oo3q7LOhfdNEOxrCzll7Bqjo7PnTV0lR", "SW-r4pWLRHjYXumPXFizS2secCKxYGAhWpE", 
+            "SW-x4pDLVJkqZ0Pv4kmCOxtmLKc2G8yZGv1", "SW-QD3fLmvWY3Pn7VBpIEsGmSKDRk8nFXsQ", 
+            "SW-Ck2rXLNmjHvQbzla7n5X2h3CRZW4r8xA", "SW-Y74zXGR9K2MvFwb1PIo9RLM8VhsDL7sq", 
+            "SW-Hd1nZEkDJn3Oo4vaESmNLFn2qCP8p3TZ", "SW-Lu9oXZNm5FqRIt2QsGOcVJL5GcVKr9sD", 
+            "SW-NK6aXFZ1kW5PoEwAsRnXC2ME7WpVHsCx", "SW-Rv3gYK7PLoQ8mz2NkCHzXgBJLW8qFNw5", 
+            "SW-Ao5pYH2LkW7PoXsCtSnDLQJM6XqG9RTk", "SW-Mv7sXBrLqN9Qn4y8ZdCmFLJ3TpCw7UoR", 
+            "SW-1LsXPlAm2Mn0YXx9fR7u9TCKoQP1ZkFt", "SW-2MvDLNj9YF7vGKm6cWpRM8ChPoW5rXsA", 
+            "SW-3OvJLKm2XG8zLNs9cFtVp7YLqQP4vTnF", "SW-4LvVKXm3ZF9yHOq7bRsJL9DhQpV6zAsG", 
+            "SW-5OvKRLn4BG0yINr8dUtKM0EjPoX7wYsH", "SW-6LvMLNm5CF1zJPq9eVwMN1FkRqW8xZtJ", 
+            "SW-7NvPLQn6EG2yKOs0fWvOP2GlSoX9aUtK", "SW-8OvQLRn7FG3zLPt1gXwQP3HmToX0bVsL", 
+            "SW-9PvSLUn8HG4zMQv2hYxRP4InUoY1cWsM", "SW-ALvTLVo9IG5zNRw3iZySP5JoVpY2dXtN", 
+            "SW-BMvULWo0JG6zOSx4jAyTQ6KpWpZ3eYuO", "SW-CLvVMPo1KG7zPTy5kByUR7LpXpZ4fZvP", 
+            "SW-DNvWNPp2LG8zQUz6lCyVS8MqYpZ5gAwQ", "SW-ELvXPQq3MH9zRV0nAzWT9NrZqZ6hBxR", 
+            "SW-FOvYQRr4NI0zSW1oBzXT0OrZqZ7iCyS", "SW-GPvZRSo5OJ1zTX2pCzYU1PrZrZ8jDzT", 
+            "SW-HQvASUp6PK2zUY3qDzZV2QrZsZ9kEzU", "SW-IRvBTVp7QL3zVZ4rEzAW3RrZtZ0lFaV", 
+            "SW-JSvCUWq8RM4zWZ5sFzBX4SrZtZ1mGbW", "SW-KTvDVXr9SN5zXZ6tGzCY5TrZuZ2nHcX", 
+            "SW-LUvEWBp0TO6zYZ7uHzDZ6UrZvZ3oIdY", "SW-MVvFXCq1UP7zZA8vIzE07VtZwZ4pJeZ", 
+            "SW-NWvGYCp2VQ8zAB9wJzF18WsZwZ5qKf0", "SW-OVvHZDq3WR9zBC0xKzG29XrZwZ6rLg1", 
+            "SW-PXvIAEp4XS0zCD1yLzH3AXsZzZ7sMh2", "SW-QYvJBFr5YT1zDE2zMzI4BYtZzZ8tNi3", 
+            "SW-RZvKCGp6ZU2zEF3AMzJ5CZtZzZ9uOj4", "SW-SAvLDHp7AV3zFG4BNzK6DYuZ0Z0vPk5", 
+            "SW-TBvMEIq8BW4zGH5COzL7EZvZ1Z1wQl6", "SW-UCvNFJr9CX5zHI6DPzM8FZuZ2Z2xRm7", 
+            "SW-VDvOGKr0DY6zIJ7EQzN9GZvZ3Z3ySn8", "SW-WEvPHLs1EZ7zJK8FRzO0HZvZ4Z4zTo9", 
+            "SW-XFvQIMr2FA8zKL9GSzP1IZvZ5Z5aUp0"
+        ];
+
+        // Function to pick a random key and display it
+        function generateRandomKey() {
+            const randomIndex = Math.floor(Math.random() * KeysTable.length);
+            const randomKey = KeysTable[randomIndex];
+            document.getElementById('randomKeyDisplay').innerText = randomKey;
+        }
+
+        // Function to copy the key to the clipboard
+        function copyToClipboard() {
+            const key = document.getElementById('randomKeyDisplay').innerText;
+            navigator.clipboard.writeText(key).then(() => {
+                alert("Key copied to clipboard: " + key);
+            });
+        }
+
+        // Generate a key as soon as the page loads
+        window.onload = function() {
+            generateRandomKey();
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="frame">
+            <h1 class="title">Storm Checkpoint 3</h1>
+            <div class="description">
+                <p id="randomKeyDisplay">[Generating key...]</p>
+                <button class="cta-button" onclick="copyToClipboard()">Copy</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
