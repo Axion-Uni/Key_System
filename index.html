@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="styles.css">
     <script>
         // Array with 55 keys
-        const axionKeys = [
-"SW-rve8aw3Rd02sflIOQmRCi1Y7WfTxv7Fu", "SW-Yo9RXK7nL5apIE6PGZd5GCtCqSW8PnrJ", 
+        const KeysTable = [
+            "SW-rve8aw3Rd02sflIOQmRCi1Y7WfTxv7Fu", "SW-Yo9RXK7nL5apIE6PGZd5GCtCqSW8PnrJ", 
             "SW-Oo3q7LOhfdNEOxrCzll7Bqjo7PnTV0lR", "SW-r4pWLRHjYXumPXFizS2secCKxYGAhWpE", 
             "SW-x4pDLVJkqZ0Pv4kmCOxtmLKc2G8yZGv1", "SW-QD3fLmvWY3Pn7VBpIEsGmSKDRk8nFXsQ", 
             "SW-Ck2rXLNmjHvQbzla7n5X2h3CRZW4r8xA", "SW-Y74zXGR9K2MvFwb1PIo9RLM8VhsDL7sq", 
@@ -39,6 +39,7 @@
             const randomIndex = Math.floor(Math.random() * KeysTable.length);
             const randomKey = KeysTable[randomIndex];
             document.getElementById('randomKeyDisplay').innerText = randomKey;
+            document.getElementById('ctaButton').disabled = false; // Enable the copy button
         }
 
         // Function to copy the key to the clipboard
@@ -49,19 +50,42 @@
             });
         }
 
-        // Generate a key as soon as the page loads
+        // Checkpoints logic
+        let checkpoint = 0;
+
+        function completeCheckpoint() {
+            checkpoint++;
+            updateCheckpointStatus();
+            if (checkpoint === 3) {
+                // All checkpoints completed, generate key
+                generateRandomKey();
+            }
+        }
+
+        function updateCheckpointStatus() {
+            document.getElementById('checkpointStatus').innerText = `Checkpoint ${checkpoint} completed`;
+            if (checkpoint === 3) {
+                document.getElementById('ctaButton').disabled = false;
+                document.getElementById('ctaButton').innerText = 'Copy Key';
+            }
+        }
+
+        // Generate the key only after the page loads and after 3 checkpoints are completed
         window.onload = function() {
-            generateRandomKey();
+            document.getElementById('ctaButton').disabled = true; // Disable the button initially
         };
     </script>
 </head>
 <body>
     <div class="container">
         <div class="frame">
-            <h1 class="title">Storm Checkpoint 3</h1>
+            <h1 class="title">Axion Key System</h1>
             <div class="description">
-                <p id="randomKeyDisplay">[Generating key...]</p>
-                <button class="cta-button" onclick="copyToClipboard()">Copy</button>
+                <p id="checkpointStatus">Checkpoint 0 completed</p>
+                <button class="checkpoint-button" onclick="completeCheckpoint()">Complete Checkpoint</button>
+                <br><br>
+                <p id="randomKeyDisplay">[Key will appear here after completing 3 checkpoints]</p>
+                <button class="cta-button" id="ctaButton" onclick="copyToClipboard()" disabled>Copy Key</button>
             </div>
         </div>
     </div>
