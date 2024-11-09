@@ -4,7 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Axion Key System</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Resetting some base styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* Container for centering content */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Frame styling */
+        .frame {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Title styling */
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #5f6368;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        /* Description area */
+        .description {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Key display area */
+        #randomKeyDisplay {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1em;
+            color: #2c3e50;
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            word-wrap: break-word;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+
+        /* Checkpoint button */
+        .checkpoint-button {
+            background-color: #27ae60;
+            color: white;
+            font-size: 1.1em;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .checkpoint-button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .checkpoint-button:hover:enabled {
+            background-color: #2ecc71;
+        }
+
+        /* Call-to-action button styling */
+        .cta-button {
+            background-color: #3498db;
+            color: white;
+            font-size: 1.1em;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .cta-button:hover:enabled {
+            background-color: #2980b9;
+        }
+
+        .cta-button:active {
+            background-color: #1e6fa2;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2em;
+            }
+
+            .description {
+                font-size: 1em;
+            }
+
+            #randomKeyDisplay {
+                font-size: 1em;
+            }
+
+            .cta-button {
+                font-size: 1em;
+                padding: 12px 20px;
+            }
+        }
+    </style>
     <script>
         // Array with 55 keys
         const KeysTable = [
@@ -39,7 +171,6 @@
             const randomIndex = Math.floor(Math.random() * KeysTable.length);
             const randomKey = KeysTable[randomIndex];
             document.getElementById('randomKeyDisplay').innerText = randomKey;
-            document.getElementById('ctaButton').disabled = false; // Enable the copy button
         }
 
         // Function to copy the key to the clipboard
@@ -50,30 +181,30 @@
             });
         }
 
-        // Checkpoints logic
-        let checkpoint = 0;
+        let checkpoint1 = false;
+        let checkpoint2 = false;
 
-        function completeCheckpoint() {
-            checkpoint++;
-            updateCheckpointStatus();
-            if (checkpoint === 3) {
-                // All checkpoints completed, generate key
+        // Checkpoint 1: User joins Discord
+        function joinDiscord() {
+            window.open("https://discord.gg/Bp5drd2xhW", "_blank");
+            checkpoint1 = true;
+            updateButtons();
+        }
+
+        // Checkpoint 2: User subscribes to YouTube
+        function subscribeYouTube() {
+            window.open("https://www.youtube.com/@NebulaExploitsOfficial", "_blank");
+            checkpoint2 = true;
+            updateButtons();
+        }
+
+        // Update button states based on checkpoints
+        function updateButtons() {
+            if (checkpoint1 && checkpoint2) {
+                document.getElementById("ctaButton").disabled = false;
                 generateRandomKey();
             }
         }
-
-        function updateCheckpointStatus() {
-            document.getElementById('checkpointStatus').innerText = `Checkpoint ${checkpoint} completed`;
-            if (checkpoint === 3) {
-                document.getElementById('ctaButton').disabled = false;
-                document.getElementById('ctaButton').innerText = 'Copy Key';
-            }
-        }
-
-        // Generate the key only after the page loads and after 3 checkpoints are completed
-        window.onload = function() {
-            document.getElementById('ctaButton').disabled = true; // Disable the button initially
-        };
     </script>
 </head>
 <body>
@@ -81,10 +212,10 @@
         <div class="frame">
             <h1 class="title">Axion Key System</h1>
             <div class="description">
-                <p id="checkpointStatus">Checkpoint 0 completed</p>
-                <button class="checkpoint-button" onclick="completeCheckpoint()">Complete Checkpoint</button>
-                <br><br>
-                <p id="randomKeyDisplay">[Key will appear here after completing 3 checkpoints]</p>
+                <p>Complete the following checkpoints to get your key:</p>
+                <button class="checkpoint-button" id="checkpoint1" onclick="joinDiscord()">Join Discord Server</button>
+                <button class="checkpoint-button" id="checkpoint2" onclick="subscribeYouTube()">Subscribe to YouTube Channel</button>
+                <p id="randomKeyDisplay">[Generating key...]</p>
                 <button class="cta-button" id="ctaButton" onclick="copyToClipboard()" disabled>Copy Key</button>
             </div>
         </div>
